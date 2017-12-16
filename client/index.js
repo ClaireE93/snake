@@ -4,8 +4,8 @@ const snakeSize = 10;
 const w = 350;
 const h = 350;
 let score = 0;
-let snake;
-let food;
+const snake = [];
+const food = {};
 
 const drawModule = (function() {
   const bodySnake = (x, y) => {
@@ -30,9 +30,31 @@ const drawModule = (function() {
 
   const drawSnake = () => {
     const length = 4;
-    const snake = [];
     for (let i = 0; i < length; i++) {
       snake.push({ x: i, y: 0 });
     }
-  }
+  };
+
+  const createFood = () => {
+    food.x = Math.floor(Math.random() * 31);
+    food.y = Math.floor(Math.random() * 31);
+
+    snake.forEach((coord) => {
+      if (coord.x === food.x && coord.y === food.y) {
+        food.x = Math.floor(Math.random() * 31);
+        food.y = Math.floor(Math.random() * 31);
+      }
+    });
+
+    const checkCollision = (arr, x, y) => {
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].x === x && arr[i].y === y) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+  };
+
 })();
