@@ -1,4 +1,5 @@
 const canvas = document.getElementById('canvas');
+const button = document.getElementById('start-button');
 const ctx = canvas.getContext('2d');
 const snakeSize = 10;
 const w = 350;
@@ -7,7 +8,7 @@ let score = 0;
 const snake = [];
 const food = {};
 
-const drawModule = (function() {
+const drawModule = (() => {
   const bodySnake = (x, y) => {
     ctx.fillStyle = 'green';
     ctx.fillRect(x * snakeSize, y * snakeSize, snakeSize, snakeSize);
@@ -15,7 +16,7 @@ const drawModule = (function() {
     ctx.strokeRect(x * snakeSize, y * snakeSize, snakeSize, snakeSize);
   };
 
-  const pizza = function(x, y) => {
+  const pizza = (x, y) => {
     ctx.fillStyle = 'yellow';
     ctx.fillRect(x * snakeSize, y * snakeSize, snakeSize, snakeSize);
     ctx.fillStyle = 'red';
@@ -45,16 +46,39 @@ const drawModule = (function() {
         food.y = Math.floor(Math.random() * 31);
       }
     });
-
-    const checkCollision = (arr, x, y) => {
-      for (let i = 0; i < arr.length; i++) {
-        if (arr[i].x === x && arr[i].y === y) {
-          return true;
-        }
-      }
-      return false;
-    }
-
   };
+
+  const checkCollision = (arr, x, y) => {
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i].x === x && arr[i].y === y) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const paint = () => {
+    ctx.fillStyle = 'lightgrey';
+    ctz.fillRect(0, 0, w, h);
+    ctx.strokeStyle = 'black';
+    ctz.storkeRect(0, 0, w, h);
+
+    button.setAttribute('disabled', true);
+
+    const snakeX = snake[0].x;
+    const snakeY = snake[0].y;
+
+    if (direction == 'right') {
+        snakeX++;
+    } else if (direction == 'left') {
+        snakeX--;
+    } else if (direction == 'up') {
+        snakeY--;
+    } else if (direction == 'down') {
+        snakeY++;
+    }
+    // TODO: Finish paint function
+  };
+
 
 })();
