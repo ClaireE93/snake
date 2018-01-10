@@ -77,8 +77,43 @@ const drawModule = (() => {
     } else if (direction == 'down') {
         snakeY++;
     }
-    // TODO: Finish paint function
+
+    if (snakeX === -1 || snakeX = w / snakeSize
+        || snakeY === -1 || snakeY = h / snakeSize
+        || checkCollision(snakeX, snakeY, snake)) {
+      button.removeAttribute('disabled', true);
+      ctx.clearRect(0, 0, w, h);
+      gameloop = clearInterval(gameloop);
+    }
+    let tail;
+    if (snakeX === food.x && snakeY === food.y) {
+      tail = {
+        x: snakeX,
+        y: snakeY,
+      };
+      score++;
+      createFood();
+    } else {
+      tail = snake.pop();
+      tail.x = snakeX;
+      tail.y = snakeY;
+    }
+    snake.unshift(tail);
+
+    for (let i = 0; i < snake.length; i++) {
+      bodySnake(snake[i].x, snake[i].y);
+    }
+
+    pizza(food.x, food.y);
+    scoreText();
   };
 
+  const init = () => {
+    direction = 'down';
+    drawSnake();
+    createFood();
+    gameloop = setInterval(paint, 80);
+  };
 
+  return { init }
 })();
