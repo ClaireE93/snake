@@ -5,22 +5,26 @@ const snakeSize = 10;
 const w = 350;
 const h = 350;
 var score = 0;
-const snake = [];
+let snake = [];
 const food = {};
 
 var drawModule = (() => {
   const bodySnake = (x, y) => {
+    ctx.beginPath();
     ctx.fillStyle = 'green';
     ctx.fillRect(x * snakeSize, y * snakeSize, snakeSize, snakeSize);
     ctx.strokeStyle = 'darkgreen';
     ctx.strokeRect(x * snakeSize, y * snakeSize, snakeSize, snakeSize);
+    ctx.closePath();
   };
 
   const pizza = (x, y) => {
+    ctx.beginPath();
     ctx.fillStyle = 'yellow';
     ctx.fillRect(x * snakeSize, y * snakeSize, snakeSize, snakeSize);
     ctx.fillStyle = 'red';
     ctx.fillRect(x * snakeSize + 1, y * snakeSize + 1, snakeSize - 2, snakeSize - 2);
+    ctx.closePath();
   };
 
   const scoreText = () => {
@@ -58,10 +62,12 @@ var drawModule = (() => {
   };
 
   const paint = () => {
+    ctx.beginPath();
     ctx.fillStyle = 'lightgrey';
     ctx.fillRect(0, 0, w, h);
     ctx.strokeStyle = 'black';
     ctx.strokeRect(0, 0, w, h);
+    ctx.closePath();
 
     button.setAttribute('disabled', true);
 
@@ -80,11 +86,13 @@ var drawModule = (() => {
 
     if (snakeX === -1 || snakeX === w / snakeSize
         || snakeY === -1 || snakeY === h / snakeSize
-        || checkCollision(snakeX, snakeY, snake)) {
+        || checkCollision(snake, snakeX, snakeY)) {
       button.removeAttribute('disabled', true);
       ctx.clearRect(0, 0, w, h);
+
       gameloop = clearInterval(gameloop);
     }
+
     let tail;
     if (snakeX === food.x && snakeY === food.y) {
       tail = {
@@ -110,6 +118,7 @@ var drawModule = (() => {
 
   const init = () => {
     direction = 'down';
+    snake = [];
     drawSnake();
     createFood();
     gameloop = setInterval(paint, 80);
