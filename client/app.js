@@ -1,9 +1,9 @@
-const controlModule = ((window, document, drawModule) => {
+const controlModule = ((document, drawModule) => {
   const btn = document.getElementById('start-button');
   btn.addEventListener('click', () => {
     drawModule.init();
   });
-  
+
   document.addEventListener('keydown', (e) => {
     switch (e.keyCode) {
       case 37:
@@ -28,4 +28,4 @@ const controlModule = ((window, document, drawModule) => {
         break;
     }
   });
-})(window, document, drawModule);
+})(document, drawModule);

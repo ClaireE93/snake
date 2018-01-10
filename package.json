@@ -15,5 +15,7 @@
   "bugs": {
     "url": "https://github.com/ClaireE93/snake/issues"
   },
-  "homepage": "https://github.com/ClaireE93/snake#readme"
+  "homepage": "https://github.com/ClaireE93/snake#readme",
+  "dependencies": {
+  }
 }

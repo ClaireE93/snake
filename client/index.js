@@ -1,30 +1,29 @@
-const canvas = document.getElementById('canvas');
 const button = document.getElementById('start-button');
-const ctx = canvas.getContext('2d');
+const ctx = document.getElementById('canvas').getContext('2d');
 const snakeSize = 10;
 const w = 350;
 const h = 350;
-var score = 0;
-let snake = [];
 const food = {};
+let score;
+let snake;
+let gameLoop;
+let direction;
+// const img = new Image();
+// img.src = '../public/explosion.gif';
 
-var drawModule = (() => {
+const drawModule = (() => {
   const bodySnake = (x, y) => {
-    ctx.beginPath();
     ctx.fillStyle = 'green';
     ctx.fillRect(x * snakeSize, y * snakeSize, snakeSize, snakeSize);
     ctx.strokeStyle = 'darkgreen';
     ctx.strokeRect(x * snakeSize, y * snakeSize, snakeSize, snakeSize);
-    ctx.closePath();
   };
 
   const pizza = (x, y) => {
-    ctx.beginPath();
     ctx.fillStyle = 'yellow';
     ctx.fillRect(x * snakeSize, y * snakeSize, snakeSize, snakeSize);
     ctx.fillStyle = 'red';
     ctx.fillRect(x * snakeSize + 1, y * snakeSize + 1, snakeSize - 2, snakeSize - 2);
-    ctx.closePath();
   };
 
   const scoreText = () => {
@@ -62,14 +61,10 @@ var drawModule = (() => {
   };
 
   const paint = () => {
-    ctx.beginPath();
     ctx.fillStyle = 'lightgrey';
     ctx.fillRect(0, 0, w, h);
     ctx.strokeStyle = 'black';
     ctx.strokeRect(0, 0, w, h);
-    ctx.closePath();
-
-    button.setAttribute('disabled', true);
 
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
@@ -88,9 +83,11 @@ var drawModule = (() => {
         || snakeY === -1 || snakeY === h / snakeSize
         || checkCollision(snake, snakeX, snakeY)) {
       button.removeAttribute('disabled', true);
+      gameloop = clearInterval(gameloop);
+      // const img = document.getElementById('explosion');
+      // ctx.drawImage(img, 33, 71, 104, 124, 21, 20, 87, 104);
       ctx.clearRect(0, 0, w, h);
 
-      gameloop = clearInterval(gameloop);
     }
 
     let tail;
@@ -119,6 +116,8 @@ var drawModule = (() => {
   const init = () => {
     direction = 'down';
     snake = [];
+    score = 0;
+    button.setAttribute('disabled', true);
     drawSnake();
     createFood();
     gameloop = setInterval(paint, 80);
