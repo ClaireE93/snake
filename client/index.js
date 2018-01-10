@@ -4,11 +4,11 @@ const ctx = canvas.getContext('2d');
 const snakeSize = 10;
 const w = 350;
 const h = 350;
-let score = 0;
+var score = 0;
 const snake = [];
 const food = {};
 
-const drawModule = (() => {
+var drawModule = (() => {
   const bodySnake = (x, y) => {
     ctx.fillStyle = 'green';
     ctx.fillRect(x * snakeSize, y * snakeSize, snakeSize, snakeSize);
@@ -24,9 +24,9 @@ const drawModule = (() => {
   };
 
   const scoreText = () => {
-    const score = `Score: ${score}`;
+    const scoreText = `Score: ${score}`;
     ctx.fillStyle = 'blue';
-    ctx.fillText(score, 145, h - 5);
+    ctx.fillText(scoreText, 145, h - 5);
   };
 
   const drawSnake = () => {
@@ -59,14 +59,14 @@ const drawModule = (() => {
 
   const paint = () => {
     ctx.fillStyle = 'lightgrey';
-    ctz.fillRect(0, 0, w, h);
+    ctx.fillRect(0, 0, w, h);
     ctx.strokeStyle = 'black';
-    ctz.storkeRect(0, 0, w, h);
+    ctx.strokeRect(0, 0, w, h);
 
     button.setAttribute('disabled', true);
 
-    const snakeX = snake[0].x;
-    const snakeY = snake[0].y;
+    let snakeX = snake[0].x;
+    let snakeY = snake[0].y;
 
     if (direction == 'right') {
         snakeX++;
@@ -78,8 +78,8 @@ const drawModule = (() => {
         snakeY++;
     }
 
-    if (snakeX === -1 || snakeX = w / snakeSize
-        || snakeY === -1 || snakeY = h / snakeSize
+    if (snakeX === -1 || snakeX === w / snakeSize
+        || snakeY === -1 || snakeY === h / snakeSize
         || checkCollision(snakeX, snakeY, snake)) {
       button.removeAttribute('disabled', true);
       ctx.clearRect(0, 0, w, h);
